@@ -23,10 +23,10 @@ def compute_error_rate(logs):
     Error rate as a percentage, over requests that either succeeded or
     explicitly errored out.
     """
-    relevant = [l for l in logs if l["status"] in ("success", "error")]
+    relevant = [l for l in logs if l.get("status")]
     if not relevant:
         return 0.0
-    errors = sum(1 for l in relevant if l["status"] == "error")
+    errors = sum(1 for l in relevant if l["status"] != "success")
     return errors / len(relevant) * 100
 
 
